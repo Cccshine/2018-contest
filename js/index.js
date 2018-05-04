@@ -84,12 +84,14 @@ function newGame() {
 	}
 
 	//显示随机出现的数字2/4，并更新this.panelArr数组
-	this.showNumCell = function (panelX, panelY, showNumber, isNew) {
+	this.showNumCell = function (panelX, panelY, showNumber, isNew, isMerge) {
 
 		var eleNumCell = document.createElement('div');
 		if (isNew) {
 			eleNumCell.setAttribute('class', 'number-cell new-cell');
-		} else {
+		} else if(isMerge){
+			eleNumCell.setAttribute('class', 'number-cell merge-cell');
+		}else{
 			eleNumCell.setAttribute('class', 'number-cell');
 		}
 		eleNumCell.setAttribute('id', 'number-cell-' + panelX + '-' + panelY);
@@ -125,14 +127,10 @@ function newGame() {
 		ele.style.color = this.colorArr[index][1];
 	}
 
-	this.setCellAnimate = function () {
-
-	}
-
 	//按方向移动格子
 	this.moveCell = function (direct) {
 		var beforePanel = String(this.panelArr);
-		var mergeArr = [];
+		var mergeArr = [-1,-1,-1,-1];
 		//按方向移动，往哪个方向移动数字格就移到哪边去，空白格移到相反的方向
 		for (var i = 0; i < 4; i++) {
 			var nullArr = []; //存储空白格
@@ -147,7 +145,7 @@ function newGame() {
 				}
 			}
 
-			var offset = numArr.length;
+			var offset = nullArr.length;
 			if (direct == 1 || direct == 2) {
 				//左移或者上移，正向遍历数组 合并相等的相邻格子
 				for (var k = 0; k < numArr.length - 1; k++) {
@@ -159,7 +157,7 @@ function newGame() {
 						numArr.splice(k + 1, 1);
 						numArr.push(0);
 						this.score += numArr[k];
-						mergeArr.push([i, k]);
+						direct == 1 ? mergeArr[i] = k : mergeArr[k] = i;
 					}
 				}
 			} else {
@@ -173,7 +171,7 @@ function newGame() {
 						numArr.splice(k - 1, 1);
 						numArr.unshift(0);
 						this.score += numArr[k];
-						mergeArr.push([k + offset, i]); //to do
+						direct == 3 ? mergeArr[i] = k + offset : mergeArr[k + offset] = i;
 					}
 				}
 			}
@@ -202,7 +200,6 @@ function newGame() {
 					break;
 			}
 		}
-		console.log(mergeArr)
 		if (beforePanel == String(this.panelArr)) {
 			return;
 		}
@@ -210,8 +207,11 @@ function newGame() {
 			for (var j = 0; j < 4; j++) {
 				this.clearOneCell(i, j);
 				if (this.panelArr[i][j]) {
-					// if (mergeArr.length && j == mergeArr[i][1])
-					this.showNumCell(i, j, this.panelArr[i][j])
+					if (j == mergeArr[i]){
+						this.showNumCell(i, j, this.panelArr[i][j],false,true);
+					}else{
+						this.showNumCell(i, j, this.panelArr[i][j]);
+					}
 				}
 			}
 		}

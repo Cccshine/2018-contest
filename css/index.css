@@ -86,16 +86,31 @@ header h1 {
 }
 
 .new-cell {
-    animation-name: cellAnimate;
+    animation-name: showAnimate;
     animation-duration: 1s;
     animation-timing-function: ease;
-    -moz-animation-name: cellAnimate;
+    -moz-animation-name: showAnimate;
     -moz-animation-duration: 1s;
     -moz-animation-timing-function: ease;
-    -webkit-animation-name: cellAnimate;
+    -webkit-animation-name: showAnimate;
     -webkit-animation-duration: 1s;
     -webkit-animation-timing-function: ease;
-    -o-animation-name: cellAnimate;
+    -o-animation-name: showAnimate;
+    -o-animation-duration: 1s;
+    -o-animation-timing-function: ease;
+}
+
+.merge-cell {
+    animation-name: mergeAnimate;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    -moz-animation-name: mergeAnimate;
+    -moz-animation-duration: 1s;
+    -moz-animation-timing-function: ease;
+    -webkit-animation-name: mergeAnimate;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: ease;
+    -o-animation-name: mergeAnimate;
     -o-animation-duration: 1s;
     -o-animation-timing-function: ease;
 }
@@ -122,7 +137,8 @@ header h1 {
     }
 }
 
-@keyframes cellAnimate {
+/* 新数字块渐显 */
+@keyframes showAnimate {
     from {
         opacity: 0.2;
     }
@@ -131,7 +147,7 @@ header h1 {
     }
 }
 
-@-moz-keyframes cellAnimate {
+@-moz-keyframes showAnimate {
     /* Firefox */
     from {
         opacity: 0.2;
@@ -141,7 +157,7 @@ header h1 {
     }
 }
 
-@-webkit-keyframes cellAnimate {
+@-webkit-keyframes showAnimate {
     /* Safari 和 Chrome */
     from {
         opacity: 0.2;
@@ -151,12 +167,64 @@ header h1 {
     }
 }
 
-@-o-keyframes cellAnimate {
+@-o-keyframes showAnimate {
     /* Opera */
     from {
         opacity: 0.2;
     }
     to {
         opacity: 1;
+    }
+}
+
+/* 数字块合并效果 */
+@keyframes mergeAnimate {
+    0% {
+        transform: rotate(-15deg);
+    }
+    50%{
+        transform: rotate(15deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@-moz-keyframes mergeAnimate {
+    /* Firefox */
+    0% {
+        transform: rotate(-15deg);
+    }
+    50%{
+        transform: rotate(15deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@-webkit-keyframes mergeAnimate {
+    /* Safari 和 Chrome */
+    0% {
+        transform: rotate(-15deg);
+    }
+    50%{
+        transform: rotate(15deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@-o-keyframes mergeAnimate {
+    /* Opera */
+    0% {
+        transform: rotate(-15deg);
+    }
+    50%{
+        transform: rotate(15deg);
+    }
+    100% {
+        transform: rotate(0deg);
     }
 }
