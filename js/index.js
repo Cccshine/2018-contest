@@ -20,11 +20,11 @@ function newGame() {
 		['#f67c5f', '#fff'],
 		['#f65e3b', '#fff'],
 		['#edcf72', '#fff'],
-		['#eee4da', '#fff'],
+		['#d9f306', '#fff'],
 		['#ed4c61', '#fff'],
-		['#9c0', '#fff'],
-		['#33b5e5', '#fff'],
-		['#edc22e', '#fff']
+		['#cb58e8', '#fff'],
+		['##f9e601', '#fff'],
+		['#ed2e48', '#fff']
 	]
 
 	this.initGame = function () {
@@ -49,9 +49,8 @@ function newGame() {
 		this.initGame();
 	}
 
-	//生成随机出现的数字2/4并显示出来
+	//生成2并显示出来
 	this.randomOneNumber = function () {
-		var showNumber = Math.random() < 0.5 ? 2 : 4; //随机出现2或4
 		//随机选取格子
 		var panelX = parseInt(Math.floor(Math.random() * 4));
 		var panelY = parseInt(Math.floor(Math.random() * 4));
@@ -68,24 +67,38 @@ function newGame() {
 						if (this.panelArr[i][j] == 0) {
 							panelX = i;
 							panelY = j;
+							break;
 						}
 					}
-				}
-				if (i >= 4) {
-					if (confirm("Game Over! Do you want to try again?")) {
-						this.resetGame();
+					if(!this.panelArr[panelX][panelY]){
+						break;
 					}
 				}
 			}
 		}
 		//将数字显示到对应的空格子中
-		this.showNumCell(panelX, panelY, showNumber, true);
-		this.panelArr[panelX][panelY] = showNumber;
+		this.showNumCell(panelX, panelY, 2, true);
+		this.panelArr[panelX][panelY] = 2;
+		var numCells = document.getElementsByClassName('number-cell');
+		if(numCells.length >= 16){
+			var isContinue = 0;
+			isContinue += Number(this.moveCell(1,true));
+			isContinue += Number(this.moveCell(2,true));
+			isContinue += Number(this.moveCell(3,true));
+			isContinue += Number(this.moveCell(4,true));
+			if(!isContinue){
+				var that = this;
+				setTimeout(function(){
+					if (confirm("Game Over! Do you want to try again?")) {
+						that.resetGame();
+					}
+				},1000)
+			}
+		}
 	}
 
 	//显示随机出现的数字2/4，并更新this.panelArr数组
 	this.showNumCell = function (panelX, panelY, showNumber, isNew, isMerge) {
-
 		var eleNumCell = document.createElement('div');
 		if (isNew) {
 			eleNumCell.setAttribute('class', 'number-cell new-cell');
@@ -128,8 +141,8 @@ function newGame() {
 	}
 
 	//按方向移动格子
-	this.moveCell = function (direct) {
-		var beforePanel = String(this.panelArr);
+	this.moveCell = function (direct,isTest) {
+		var beforePanel = JSON.stringify(this.panelArr);
 		var mergeArr = [-1,-1,-1,-1];
 		//按方向移动，往哪个方向移动数字格就移到哪边去，空白格移到相反的方向
 		for (var i = 0; i < 4; i++) {
@@ -200,8 +213,12 @@ function newGame() {
 					break;
 			}
 		}
-		if (beforePanel == String(this.panelArr)) {
-			return;
+		if (beforePanel == JSON.stringify(this.panelArr)) {
+			return false;
+		}
+		if(isTest){
+			this.panelArr = JSON.parse(beforePanel)
+			return true;
 		}
 		for (var i = 0; i < 4; i++) {
 			for (var j = 0; j < 4; j++) {
