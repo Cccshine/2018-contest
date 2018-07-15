@@ -270,6 +270,7 @@ cellContainer.addEventListener("touchstart", function (event) {
 cellContainer.addEventListener("touchmove", function (event) {
 	endX = event.touches[0].pageX;
 	endY = event.touches[0].pageY;
+	event.preventDefault();
 });
 cellContainer.addEventListener("touchend", function (event) {
 	var disX = endX - startX;
