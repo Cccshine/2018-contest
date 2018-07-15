@@ -16,6 +16,7 @@ body {
 }
 
 header {
+    box-sizing: border-box;
     height: 100px;
     padding: 10px 20px 0;
     text-align: center;
