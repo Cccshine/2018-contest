@@ -17,7 +17,7 @@ body {
 
 header {
     height: 100px;
-    padding: 0 20px;
+    padding: 10px 20px 0;
     text-align: center;
 }
 
@@ -25,6 +25,7 @@ header h1 {
     font-weight: bold;
     font-size: 20px;
     color: #756c52;
+    margin-top: 0;
     margin-bottom: 10px;
     text-shadow: 1px 1px #f67c5f;
 }
@@ -55,7 +56,7 @@ header h1 {
     height: 460px;
     padding: 20px;
     background-color: #bbada0;
-    border-radius: 10px;
+    border-radius: 0 0 10px;
     position: relative;
 }
 
